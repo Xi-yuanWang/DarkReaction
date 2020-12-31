@@ -1,4 +1,4 @@
-from . import header
+import header
 
 # cross validation
 header.CV_author(header.X, header.Y, 3, header.SVC, {
@@ -8,5 +8,5 @@ header.CV_author(header.X, header.Y, 3, header.SVC, {
 svc = header.SVC(kernel=header.PUK_kernel, class_weight="balanced", C=1)
 svc.fit(header.X, header.Y)
 pred = svc.predict(header.x)
-print(header.accuracy_score(header.numout2boolout(
+print(header.precision_score(header.numout2boolout(
     header.y), header.numout2boolout(pred)))

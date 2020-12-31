@@ -28,8 +28,8 @@ Xx = np.load("./processedData/Xx.npy")
 Y = np.load("./processedData/Y.npy")
 y = np.load("./processedData/y.npy")
 X = Xx[:len(Y), :]
-x = Xx[len(Y), :]
-reactantCombination = np.load("./processedData/reactComb.npy")
+x = Xx[len(Y):, :]
+reactantCombination = np.load("./processedData/reactComb.npy",allow_pickle=True)
 
 
 def numout2boolout(label):  # 结果有1，2，3，4。但是3，4对应人的预测1，1，2

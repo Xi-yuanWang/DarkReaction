@@ -6,7 +6,7 @@ created: 2020/1/2
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.metrics import precision_score
+from sklearn.metrics import precision_score, confusion_matrix
 
 
 from sklearn.feature_selection import SelectKBest, RFE
@@ -46,8 +46,10 @@ def use_SelectKBest(n, print_log=True, interpret_tree=False):
     model.fit(X_trans,Y)
     pred=model.predict(skb.transform(x))
     precision = precision_score(numout2boolout(y),numout2boolout(pred))
+    cm = confusion_matrix(numout2boolout(y),numout2boolout(pred))
     if print_log:
         print('precision={0:.3f}'.format(precision))
+        CV_author(X_trans, Y, 3, SVC,{"kernel":PUK_kernel,"class_weight":"balanced","C":1})
 
     if interpret_tree:
         tree = reinterpret(X_trans, model, X_trans)
@@ -105,4 +107,4 @@ def use_RFE(n, print_log=True, interpret_tree=False):
 # precision= 0.815
 
 if __name__ == "__main__":
-    use_SelectKBest(n=7, interpret_tree=True)
+    use_SelectKBest(n=7, interpret_tree=False)

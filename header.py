@@ -29,7 +29,8 @@ Y = np.load("./processedData/Y.npy")
 y = np.load("./processedData/y.npy")
 X = Xx[:len(Y), :]
 x = Xx[len(Y):, :]
-reactantCombination = np.load("./processedData/reactComb.npy",allow_pickle=True)
+reactantCombination = np.load(
+    "./processedData/reactComb.npy", allow_pickle=True)
 
 
 def numout2boolout(label):  # 结果有1，2，3，4。但是3，4对应人的预测1，1，2
@@ -52,8 +53,7 @@ def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):  # 作者使用的SVM核
 
 
 def CV_author(X, Y, n_splits, Model, params, shuffle=True):
-    scaler = StandardScaler()
-    X_std = scaler.fit_transform(X)
+    X_std = StandardScaler().fit_transform(X)  # 有数据没有归一化的风险
     kf = KFold(n_splits=n_splits, shuffle=shuffle)
     print(params)
     for train_index_rc, test_index_rc in kf.split(reactantCombination):

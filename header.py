@@ -75,3 +75,9 @@ def CV_author(X, Y, n_splits, Model, params, shuffle=True):
         print("accuracy={:.3f}".format(accuracy_score(Y_test, pred)))
         print("confusion matrix is")
         print(confusion_matrix(Y_test, pred))
+
+def reinterpret(X_model,model,X_tree):
+    pred=model.predict(X_model)
+    ret=DecisionTreeClassifier()
+    ret.fit(X_tree,pred)
+    return ret

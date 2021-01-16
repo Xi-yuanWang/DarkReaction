@@ -31,7 +31,7 @@ X = Xx[:len(Y), :]
 x = Xx[len(Y):, :]
 reactantCombination = np.load(
     "./processedData/reactComb.npy", allow_pickle=True)
-
+reactantMask=["XXXinorg1","XXXinorg2","XXXinorg3","XXXorg1","XXXorg2"]
 
 def numout2boolout(label):  # 结果有1，2，3，4。但是3，4对应人的预测1，1，2
     return label > 2.5

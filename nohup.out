@@ -36,9 +36,36 @@ SVC.py:8: DeprecationWarning: The default dtype for empty Series will be 'object
   _warn_prf(average, modifier, msg_start, len(result))
 /nfs-share/home/1800011848/miniconda3/envs/torch_geo/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1221: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
+  
 Traceback (most recent call last):
   File "SVC.py", line 62, in <module>
     series=pd.Series(data=result,index=serieLabel)
   File "/nfs-share/home/1800011848/.local/lib/python3.8/site-packages/pandas/core/series.py", line 313, in __init__
     raise ValueError(
 ValueError: Length of passed values is 120, index implies 4.
+SVC.py:8: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  series = pd.Series(data=result, index=serieLabel)
+Traceback (most recent call last):
+  File "SVC.py", line 45, in <module>
+    result += CV(header.X, header.Y, header.SVC, {
+  File "SVC.py", line 27, in CV
+    model.fit(X_train, Y_train)
+  File "/nfs-share/home/1800011848/miniconda3/envs/torch_geo/lib/python3.8/site-packages/sklearn/svm/_base.py", line 217, in fit
+    fit(X, y, sample_weight, solver_type, kernel, random_seed=seed)
+  File "/nfs-share/home/1800011848/miniconda3/envs/torch_geo/lib/python3.8/site-packages/sklearn/svm/_base.py", line 268, in _dense_fit
+    self._probB, self.fit_status_ = libsvm.fit(
+  File "sklearn/svm/_libsvm.pyx", line 175, in sklearn.svm._libsvm.fit
+ValueError: ' header.PUK_kernel, "linear", poly' is not in list
+SVC.py:8: DeprecationWarning: The default dtype for empty Series will be 'object' instead of 'float64' in a future version. Specify a dtype explicitly to silence this warning.
+  series = pd.Series(data=result, index=serieLabel)
+Traceback (most recent call last):
+  File "SVC.py", line 45, in <module>
+    result += CV(header.X, header.Y, header.SVC, {
+  File "SVC.py", line 27, in CV
+    model.fit(X_train, Y_train)
+  File "/nfs-share/home/1800011848/miniconda3/envs/torch_geo/lib/python3.8/site-packages/sklearn/svm/_base.py", line 217, in fit
+    fit(X, y, sample_weight, solver_type, kernel, random_seed=seed)
+  File "/nfs-share/home/1800011848/miniconda3/envs/torch_geo/lib/python3.8/site-packages/sklearn/svm/_base.py", line 268, in _dense_fit
+    self._probB, self.fit_status_ = libsvm.fit(
+  File "sklearn/svm/_libsvm.pyx", line 175, in sklearn.svm._libsvm.fit
+ValueError: ' header.PUK_kernel, "linear", poly' is not in list

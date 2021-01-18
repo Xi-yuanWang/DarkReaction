@@ -1,0 +1,950 @@
+{'alpha': 1e-05}
+recall=0.762
+precision=0.754
+accuracy=0.762
+confusion matrix is
+[[209 178]
+ [104 695]]
+recall=0.770
+precision=0.759
+accuracy=0.770
+confusion matrix is
+[[183 176]
+ [104 753]]
+recall=0.798
+precision=0.787
+accuracy=0.798
+confusion matrix is
+[[ 207  220]
+ [  93 1033]]
+{'alpha': 1.5998587196060572e-05}
+recall=0.790
+precision=0.780
+accuracy=0.790
+confusion matrix is
+[[186 173]
+ [108 871]]
+recall=0.749
+precision=0.739
+accuracy=0.749
+confusion matrix is
+[[198 201]
+ [101 703]]
+recall=0.796
+precision=0.790
+accuracy=0.796
+confusion matrix is
+[[190 225]
+ [ 63 936]]
+{'alpha': 2.559547922699533e-05}
+recall=0.780
+precision=0.765
+accuracy=0.780
+confusion matrix is
+[[160 206]
+ [ 85 870]]
+recall=0.781
+precision=0.787
+accuracy=0.781
+confusion matrix is
+[[207 118]
+ [145 729]]
+recall=0.755
+precision=0.746
+accuracy=0.755
+confusion matrix is
+[[237 245]
+ [107 846]]
+{'alpha': 4.094915062380427e-05}
+recall=0.738
+precision=0.723
+accuracy=0.738
+confusion matrix is
+[[146 202]
+ [ 88 670]]
+recall=0.803
+precision=0.798
+accuracy=0.803
+confusion matrix is
+[[ 182  158]
+ [ 132 1000]]
+recall=0.789
+precision=0.789
+accuracy=0.789
+confusion matrix is
+[[265 220]
+ [ 71 821]]
+{'alpha': 6.55128556859551e-05}
+recall=0.758
+precision=0.738
+accuracy=0.758
+confusion matrix is
+[[152 272]
+ [ 93 990]]
+recall=0.771
+precision=0.764
+accuracy=0.771
+confusion matrix is
+[[207 176]
+ [ 85 670]]
+recall=0.794
+precision=0.784
+accuracy=0.794
+confusion matrix is
+[[194 172]
+ [ 98 846]]
+{'alpha': 0.00010481131341546853}
+recall=0.784
+precision=0.777
+accuracy=0.784
+confusion matrix is
+[[227 183]
+ [ 90 764]]
+recall=0.787
+precision=0.781
+accuracy=0.787
+confusion matrix is
+[[221 164]
+ [108 786]]
+recall=0.710
+precision=0.732
+accuracy=0.710
+confusion matrix is
+[[215 163]
+ [246 788]]
+{'alpha': 0.00016768329368110083}
+recall=0.788
+precision=0.780
+accuracy=0.788
+confusion matrix is
+[[249 207]
+ [101 894]]
+recall=0.768
+precision=0.758
+accuracy=0.768
+confusion matrix is
+[[202 201]
+ [110 830]]
+recall=0.796
+precision=0.785
+accuracy=0.796
+confusion matrix is
+[[156 158]
+ [ 79 768]]
+{'alpha': 0.0002682695795279727}
+recall=0.728
+precision=0.714
+accuracy=0.728
+confusion matrix is
+[[185 229]
+ [135 787]]
+recall=0.816
+precision=0.808
+accuracy=0.816
+confusion matrix is
+[[214 168]
+ [ 83 896]]
+recall=0.771
+precision=0.761
+accuracy=0.771
+confusion matrix is
+[[193 184]
+ [104 777]]
+{'alpha': 0.00042919342601287783}
+recall=0.760
+precision=0.748
+accuracy=0.760
+confusion matrix is
+[[166 187]
+ [ 96 732]]
+recall=0.771
+precision=0.771
+accuracy=0.771
+confusion matrix is
+[[263 152]
+ [153 763]]
+recall=0.762
+precision=0.745
+accuracy=0.762
+confusion matrix is
+[[166 239]
+ [105 933]]
+{'alpha': 0.0006866488450042998}
+recall=0.774
+precision=0.763
+accuracy=0.774
+confusion matrix is
+[[206 212]
+ [106 884]]
+recall=0.788
+precision=0.782
+accuracy=0.788
+confusion matrix is
+[[200 169]
+ [ 74 703]]
+recall=0.817
+precision=0.809
+accuracy=0.817
+confusion matrix is
+[[213 173]
+ [ 83 932]]
+{'alpha': 0.0010985411419875584}
+recall=0.789
+precision=0.777
+accuracy=0.789
+confusion matrix is
+[[179 189]
+ [103 910]]
+recall=0.826
+precision=0.821
+accuracy=0.826
+confusion matrix is
+[[238 148]
+ [ 81 851]]
+recall=0.779
+precision=0.773
+accuracy=0.779
+confusion matrix is
+[[238 181]
+ [ 96 741]]
+{'alpha': 0.001757510624854793}
+recall=0.796
+precision=0.781
+accuracy=0.796
+confusion matrix is
+[[128 167]
+ [ 70 795]]
+recall=0.775
+precision=0.766
+accuracy=0.775
+confusion matrix is
+[[203 205]
+ [ 85 794]]
+recall=0.785
+precision=0.780
+accuracy=0.785
+confusion matrix is
+[[220 250]
+ [ 74 964]]
+{'alpha': 0.002811768697974231}
+recall=0.796
+precision=0.789
+accuracy=0.796
+confusion matrix is
+[[225 171]
+ [103 845]]
+recall=0.783
+precision=0.772
+accuracy=0.783
+confusion matrix is
+[[ 221  224]
+ [ 119 1020]]
+recall=0.738
+precision=0.730
+accuracy=0.738
+confusion matrix is
+[[174 158]
+ [111 584]]
+{'alpha': 0.004498432668969444}
+recall=0.788
+precision=0.781
+accuracy=0.788
+confusion matrix is
+[[244 180]
+ [114 848]]
+recall=0.754
+precision=0.739
+accuracy=0.754
+confusion matrix is
+[[162 220]
+ [ 96 809]]
+recall=0.779
+precision=0.767
+accuracy=0.779
+confusion matrix is
+[[159 208]
+ [ 75 840]]
+{'alpha': 0.0071968567300115215}
+recall=0.791
+precision=0.778
+accuracy=0.791
+confusion matrix is
+[[ 195  232]
+ [  92 1028]]
+recall=0.750
+precision=0.760
+accuracy=0.750
+confusion matrix is
+[[147 293]
+ [ 38 848]]
+recall=0.791
+precision=0.780
+accuracy=0.791
+confusion matrix is
+[[137 169]
+ [ 57 719]]
+{'alpha': 0.011513953993264481}
+recall=0.845
+precision=0.839
+accuracy=0.845
+confusion matrix is
+[[ 199  198]
+ [  51 1156]]
+recall=0.780
+precision=0.774
+accuracy=0.780
+confusion matrix is
+[[137 214]
+ [ 48 794]]
+recall=0.788
+precision=0.795
+accuracy=0.788
+confusion matrix is
+[[228 197]
+ [ 48 685]]
+{'alpha': 0.018420699693267165}
+recall=0.759
+precision=0.773
+accuracy=0.759
+confusion matrix is
+[[237 315]
+ [ 51 915]]
+recall=0.859
+precision=0.854
+accuracy=0.859
+confusion matrix is
+[[168 115]
+ [ 44 802]]
+recall=0.768
+precision=0.750
+accuracy=0.768
+confusion matrix is
+[[137 201]
+ [102 868]]
+{'alpha': 0.029470517025518096}
+recall=0.799
+precision=0.797
+accuracy=0.799
+confusion matrix is
+[[136 222]
+ [ 36 888]]
+recall=0.783
+precision=0.809
+accuracy=0.783
+confusion matrix is
+[[194 250]
+ [ 21 781]]
+recall=0.767
+precision=0.758
+accuracy=0.767
+confusion matrix is
+[[179 192]
+ [140 916]]
+{'alpha': 0.04714866363457394}
+recall=0.863
+precision=0.878
+accuracy=0.863
+confusion matrix is
+[[188 171]
+ [  7 934]]
+recall=0.802
+precision=0.821
+accuracy=0.802
+confusion matrix is
+[[195 238]
+ [ 22 858]]
+recall=0.767
+precision=0.756
+accuracy=0.767
+confusion matrix is
+[[115 266]
+ [ 47 914]]
+{'alpha': 0.07543120063354623}
+recall=0.829
+precision=0.840
+accuracy=0.829
+confusion matrix is
+[[164 183]
+ [ 19 816]]
+recall=0.796
+precision=0.840
+accuracy=0.796
+confusion matrix is
+[[110 234]
+ [  1 808]]
+recall=0.831
+precision=0.858
+accuracy=0.831
+confusion matrix is
+[[ 215  267]
+ [   6 1132]]
+{'alpha': 0.1206792640639329}
+recall=0.847
+precision=0.872
+accuracy=0.847
+confusion matrix is
+[[137 191]
+ [  1 929]]
+recall=0.698
+precision=0.771
+accuracy=0.698
+confusion matrix is
+[[ 30 429]
+ [  2 965]]
+recall=0.776
+precision=0.808
+accuracy=0.776
+confusion matrix is
+[[111 275]
+ [ 10 875]]
+{'alpha': 0.19306977288832497}
+recall=0.789
+precision=0.809
+accuracy=0.789
+confusion matrix is
+[[ 47 271]
+ [  6 987]]
+recall=0.793
+precision=0.830
+accuracy=0.793
+confusion matrix is
+[[ 141  303]
+ [   6 1044]]
+recall=0.643
+precision=0.413
+accuracy=0.643
+confusion matrix is
+[[  0 411]
+ [  0 739]]
+{'alpha': 0.30888435964774846}
+recall=0.655
+precision=0.429
+accuracy=0.655
+confusion matrix is
+[[  0 404]
+ [  0 768]]
+recall=0.722
+precision=0.522
+accuracy=0.722
+confusion matrix is
+[[  0 352]
+ [  0 915]]
+recall=0.725
+precision=0.526
+accuracy=0.725
+confusion matrix is
+[[   0  417]
+ [   0 1099]]
+{'alpha': 0.49417133613238384}
+recall=0.686
+precision=0.471
+accuracy=0.686
+confusion matrix is
+[[  0 417]
+ [  0 913]]
+recall=0.775
+precision=0.601
+accuracy=0.775
+confusion matrix is
+[[   0  326]
+ [   0 1125]]
+recall=0.634
+precision=0.402
+accuracy=0.634
+confusion matrix is
+[[  0 430]
+ [  0 744]]
+{'alpha': 0.7906043210907702}
+recall=0.627
+precision=0.393
+accuracy=0.627
+confusion matrix is
+[[  0 418]
+ [  0 702]]
+recall=0.771
+precision=0.594
+accuracy=0.771
+confusion matrix is
+[[   0  351]
+ [   0 1180]]
+recall=0.690
+precision=0.476
+accuracy=0.690
+confusion matrix is
+[[  0 404]
+ [  0 900]]
+{'alpha': 1.2648552168552958}
+recall=0.691
+precision=0.478
+accuracy=0.691
+confusion matrix is
+[[  0 444]
+ [  0 993]]
+recall=0.713
+precision=0.509
+accuracy=0.713
+confusion matrix is
+[[  0 358]
+ [  0 890]]
+recall=0.708
+precision=0.501
+accuracy=0.708
+confusion matrix is
+[[  0 371]
+ [  0 899]]
+{'alpha': 2.0235896477251556}
+recall=0.629
+precision=0.396
+accuracy=0.629
+confusion matrix is
+[[  0 494]
+ [  0 839]]
+recall=0.764
+precision=0.584
+accuracy=0.764
+confusion matrix is
+[[   0  337]
+ [   0 1091]]
+recall=0.714
+precision=0.509
+accuracy=0.714
+confusion matrix is
+[[  0 342]
+ [  0 852]]
+{'alpha': 3.2374575428176464}
+recall=0.699
+precision=0.489
+accuracy=0.699
+confusion matrix is
+[[  0 373]
+ [  0 867]]
+recall=0.744
+precision=0.554
+accuracy=0.744
+confusion matrix is
+[[   0  362]
+ [   0 1054]]
+recall=0.663
+precision=0.439
+accuracy=0.663
+confusion matrix is
+[[  0 438]
+ [  0 861]]
+{'alpha': 5.1794746792312125}
+recall=0.699
+precision=0.489
+accuracy=0.699
+confusion matrix is
+[[  0 336]
+ [  0 781]]
+recall=0.716
+precision=0.513
+accuracy=0.716
+confusion matrix is
+[[  0 381]
+ [  0 961]]
+recall=0.695
+precision=0.483
+accuracy=0.695
+confusion matrix is
+[[   0  456]
+ [   0 1040]]
+{'alpha': 8.286427728546842}
+recall=0.726
+precision=0.527
+accuracy=0.726
+confusion matrix is
+[[   0  426]
+ [   0 1128]]
+recall=0.704
+precision=0.496
+accuracy=0.704
+confusion matrix is
+[[  0 405]
+ [  0 964]]
+recall=0.669
+precision=0.447
+accuracy=0.669
+confusion matrix is
+[[  0 342]
+ [  0 690]]
+{'alpha': 13.257113655901108}
+recall=0.728
+precision=0.530
+accuracy=0.728
+confusion matrix is
+[[   0  377]
+ [   0 1009]]
+recall=0.740
+precision=0.548
+accuracy=0.740
+confusion matrix is
+[[   0  378]
+ [   0 1078]]
+recall=0.624
+precision=0.390
+accuracy=0.624
+confusion matrix is
+[[  0 418]
+ [  0 695]]
+{'alpha': 21.209508879201927}
+recall=0.728
+precision=0.529
+accuracy=0.728
+confusion matrix is
+[[  0 285]
+ [  0 761]]
+recall=0.709
+precision=0.502
+accuracy=0.709
+confusion matrix is
+[[  0 385]
+ [  0 936]]
+recall=0.683
+precision=0.467
+accuracy=0.683
+confusion matrix is
+[[   0  503]
+ [   0 1085]]
+{'alpha': 33.9322177189533}
+recall=0.663
+precision=0.439
+accuracy=0.663
+confusion matrix is
+[[  0 441]
+ [  0 867]]
+recall=0.713
+precision=0.508
+accuracy=0.713
+confusion matrix is
+[[  0 378]
+ [  0 937]]
+recall=0.734
+precision=0.539
+accuracy=0.734
+confusion matrix is
+[[  0 354]
+ [  0 978]]
+{'alpha': 54.286754393238596}
+recall=0.692
+precision=0.479
+accuracy=0.692
+confusion matrix is
+[[  0 432]
+ [  0 971]]
+recall=0.752
+precision=0.565
+accuracy=0.752
+confusion matrix is
+[[   0  352]
+ [   0 1067]]
+recall=0.657
+precision=0.431
+accuracy=0.657
+confusion matrix is
+[[  0 389]
+ [  0 744]]
+{'alpha': 86.85113737513521}
+recall=0.688
+precision=0.473
+accuracy=0.688
+confusion matrix is
+[[  0 392]
+ [  0 863]]
+recall=0.711
+precision=0.506
+accuracy=0.711
+confusion matrix is
+[[  0 384]
+ [  0 947]]
+recall=0.710
+precision=0.504
+accuracy=0.710
+confusion matrix is
+[[  0 397]
+ [  0 972]]
+{'alpha': 138.9495494373139}
+recall=0.739
+precision=0.545
+accuracy=0.739
+confusion matrix is
+[[   0  410]
+ [   0 1158]]
+recall=0.708
+precision=0.501
+accuracy=0.708
+confusion matrix is
+[[  0 368]
+ [  0 892]]
+recall=0.650
+precision=0.422
+accuracy=0.650
+confusion matrix is
+[[  0 395]
+ [  0 732]]
+{'alpha': 222.29964825261956}
+recall=0.689
+precision=0.475
+accuracy=0.689
+confusion matrix is
+[[  0 415]
+ [  0 920]]
+recall=0.713
+precision=0.508
+accuracy=0.713
+confusion matrix is
+[[  0 359]
+ [  0 892]]
+recall=0.709
+precision=0.502
+accuracy=0.709
+confusion matrix is
+[[  0 399]
+ [  0 970]]
+{'alpha': 355.64803062231283}
+recall=0.696
+precision=0.484
+accuracy=0.696
+confusion matrix is
+[[  0 330]
+ [  0 754]]
+recall=0.749
+precision=0.561
+accuracy=0.749
+confusion matrix is
+[[   0  352]
+ [   0 1051]]
+recall=0.666
+precision=0.443
+accuracy=0.666
+confusion matrix is
+[[  0 491]
+ [  0 977]]
+{'alpha': 568.9866029018305}
+recall=0.735
+precision=0.540
+accuracy=0.735
+confusion matrix is
+[[   0  480]
+ [   0 1328]]
+recall=0.639
+precision=0.408
+accuracy=0.639
+confusion matrix is
+[[  0 430]
+ [  0 760]]
+recall=0.725
+precision=0.526
+accuracy=0.725
+confusion matrix is
+[[  0 263]
+ [  0 694]]
+{'alpha': 910.2981779915227}
+recall=0.684
+precision=0.468
+accuracy=0.684
+confusion matrix is
+[[  0 371]
+ [  0 804]]
+recall=0.724
+precision=0.524
+accuracy=0.724
+confusion matrix is
+[[  0 372]
+ [  0 975]]
+recall=0.700
+precision=0.490
+accuracy=0.700
+confusion matrix is
+[[   0  430]
+ [   0 1003]]
+{'alpha': 1456.3484775012444}
+recall=0.764
+precision=0.584
+accuracy=0.764
+confusion matrix is
+[[   0  324]
+ [   0 1050]]
+recall=0.667
+precision=0.445
+accuracy=0.667
+confusion matrix is
+[[   0  506]
+ [   0 1015]]
+recall=0.676
+precision=0.458
+accuracy=0.676
+confusion matrix is
+[[  0 343]
+ [  0 717]]
+{'alpha': 2329.951810515372}
+recall=0.731
+precision=0.534
+accuracy=0.731
+confusion matrix is
+[[  0 354]
+ [  0 962]]
+recall=0.677
+precision=0.458
+accuracy=0.677
+confusion matrix is
+[[  0 378]
+ [  0 791]]
+recall=0.700
+precision=0.490
+accuracy=0.700
+confusion matrix is
+[[   0  441]
+ [   0 1029]]
+{'alpha': 3727.593720314938}
+recall=0.719
+precision=0.517
+accuracy=0.719
+confusion matrix is
+[[  0 302]
+ [  0 774]]
+recall=0.665
+precision=0.442
+accuracy=0.665
+confusion matrix is
+[[  0 452]
+ [  0 898]]
+recall=0.726
+precision=0.527
+accuracy=0.726
+confusion matrix is
+[[   0  419]
+ [   0 1110]]
+{'alpha': 5963.623316594637}
+recall=0.710
+precision=0.504
+accuracy=0.710
+confusion matrix is
+[[   0  414]
+ [   0 1013]]
+recall=0.691
+precision=0.477
+accuracy=0.691
+confusion matrix is
+[[  0 375]
+ [  0 838]]
+recall=0.708
+precision=0.501
+accuracy=0.708
+confusion matrix is
+[[  0 384]
+ [  0 931]]
+{'alpha': 9540.954763499964}
+recall=0.747
+precision=0.558
+accuracy=0.747
+confusion matrix is
+[[   0  373]
+ [   0 1102]]
+recall=0.681
+precision=0.464
+accuracy=0.681
+confusion matrix is
+[[  0 458]
+ [  0 979]]
+recall=0.672
+precision=0.452
+accuracy=0.672
+confusion matrix is
+[[  0 342]
+ [  0 701]]
+{'alpha': 15264.179671752365}
+recall=0.740
+precision=0.547
+accuracy=0.740
+confusion matrix is
+[[  0 342]
+ [  0 973]]
+recall=0.687
+precision=0.473
+accuracy=0.687
+confusion matrix is
+[[  0 357]
+ [  0 785]]
+recall=0.684
+precision=0.467
+accuracy=0.684
+confusion matrix is
+[[   0  474]
+ [   0 1024]]
+{'alpha': 24420.53094548655}
+recall=0.758
+precision=0.575
+accuracy=0.758
+confusion matrix is
+[[  0 265]
+ [  0 832]]
+recall=0.678
+precision=0.459
+accuracy=0.678
+confusion matrix is
+[[  0 391]
+ [  0 822]]
+recall=0.686
+precision=0.470
+accuracy=0.686
+confusion matrix is
+[[   0  517]
+ [   0 1128]]
+{'alpha': 39069.39937054621}
+recall=0.686
+precision=0.470
+accuracy=0.686
+confusion matrix is
+[[  0 392]
+ [  0 855]]
+recall=0.692
+precision=0.479
+accuracy=0.692
+confusion matrix is
+[[  0 383]
+ [  0 860]]
+recall=0.728
+precision=0.530
+accuracy=0.728
+confusion matrix is
+[[   0  398]
+ [   0 1067]]
+{'alpha': 62505.51925273976}
+recall=0.698
+precision=0.487
+accuracy=0.698
+confusion matrix is
+[[  0 410]
+ [  0 948]]
+recall=0.734
+precision=0.539
+accuracy=0.734
+confusion matrix is
+[[   0  376]
+ [   0 1040]]
+recall=0.672
+precision=0.452
+accuracy=0.672
+confusion matrix is
+[[  0 387]
+ [  0 794]]
+{'alpha': 100000.0}
+recall=0.728
+precision=0.530
+accuracy=0.728
+confusion matrix is
+[[  0 354]
+ [  0 948]]
+recall=0.727
+precision=0.528
+accuracy=0.727
+confusion matrix is
+[[   0  379]
+ [   0 1009]]
+recall=0.652
+precision=0.425
+accuracy=0.652
+confusion matrix is
+[[  0 440]
+ [  0 825]]

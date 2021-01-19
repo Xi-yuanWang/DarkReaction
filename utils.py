@@ -34,6 +34,10 @@ y = np.load("./processedData/Y/y.npy")
 reactantCombination = np.load(
     "./processedData/X/reactComb.npy", allow_pickle=True)
 
+
+reactComb = np.load(
+    "./processedData/X/reactComb.npy", allow_pickle=True)
+
 reactantMask = ["XXXinorg1", "XXXinorg2", "XXXinorg3", "XXXorg1", "XXXorg2"]
 
 '''

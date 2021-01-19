@@ -289,4 +289,6 @@ test函数求模型在预测集上的表现，类似CV_author。
 **NN.py** 搭建了一个两层的神经网络分类器并进行训练。
 
 # 每个人的工作
-王希元：原始数据处理与分析，SVM，线性回归方法
+王希元：原始数据处理与分析(processData.py)，SVM(SVC.py)，线性回归方法(linear_fit.py), dataAnal.ipynb, outAnal.ipynb
+
+尚游皓：神经网络(NN.py)，特征选择(feature_select.py)

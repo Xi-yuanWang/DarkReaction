@@ -45,7 +45,7 @@ class simple_NN(nn.Module):
             OrderedDict(
                 [
                     ("fc1", nn.Linear(n_in, n_hidden1)),
-                    ("activation1", nn.Sigmoid())
+                    ("activation1",nn.Tanh()) #nn.ReLU())
                 ]
             )
         )
@@ -53,7 +53,7 @@ class simple_NN(nn.Module):
             OrderedDict(
                 [
                     ("fc2", nn.Linear(n_hidden1, n_hidden2)),
-                    ("activation2", nn.Sigmoid())
+                    ("activation2", nn.Tanh())
                 ]
             )
         )
@@ -74,7 +74,7 @@ class simple_NN(nn.Module):
 
 
 def main():
-    learning_rate = 1e-3
+    learning_rate = 1e-0
     weight_decay = 1e-5
     epoches = 100
     log_interval = 10
@@ -82,11 +82,23 @@ def main():
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 加载数据
-    Y = np.load("./processedData/Y_train.npy") - 1
-    y = np.load("./processedData/y_test.npy") - 1
-    Xx = np.load("./processedData/Xx.npy")
-    X = Xx[:len(Y), :]
-    x = Xx[len(Y):, :]
+    Y = numout2boolout(np.load("./processedData/Y_train.npy"))
+    y = numout2boolout(np.load("./processedData/y_test.npy"))
+
+    weights_of_lable = np.zeros(2)
+    print("# of labels in Y:")
+    for i in range(2):
+        num_label = len(Y[Y==i])
+        print(i, num_label)
+        weights_of_lable[i] = 1 / num_label
+
+    weights = [weights_of_lable[int(i)] for i in Y]
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights, len(weights))
+    #Xx = np.load("./processedData/Xx.npy")
+    #X = Xx[:len(Y), :]
+    #x = Xx[len(Y):, :]
+    X = np.load("./processedData/X_train_reduced.npy")
+    x = np.load("./processedData/x_test_reduced.npy")
 
     normalizer = Normalizer()
     X_trans = normalizer.fit_transform(X)
@@ -94,11 +106,11 @@ def main():
 
     train_data = TensorDataset(torch.tensor(X_trans, dtype=torch.float), torch.tensor(Y, dtype=torch.long))
     test_data = TensorDataset(torch.tensor(x_trans, dtype=torch.float), torch.tensor(y, dtype=torch.long))
-    train_data_loader = DataLoader(train_data, batch_size=64, shuffle=True)
+    train_data_loader = DataLoader(train_data, batch_size=64, sampler=sampler)
     test_data_loader = DataLoader(test_data, batch_size=64, shuffle=True)
 
     # 构造模型
-    model = simple_NN(np.shape(X)[1], 20, 20).to(DEVICE)
+    model = simple_NN(np.shape(X)[1], 5, 5).to(DEVICE)
     optimizer = torch.optim.Adam(
         model.parameters(),
         lr=learning_rate,
@@ -122,6 +134,7 @@ def main():
             loss.backward()
             optimizer.step()
             scheduler.step()
+            #print(model.layer1[0].weight.grad)
         
         if (epoch + 1) % log_interval == 0:
             print("Epoch = {0}, loss = {1:.5f}".format(
@@ -142,8 +155,8 @@ def main():
             labels = np.append(labels, label.cpu())
             pred = np.append(pred, category)
 
-        labels_trans = numout2boolout(labels+1)
-        pred_trans = numout2boolout(pred+1)
+        labels_trans = labels
+        pred_trans = pred
 
         acc = accuracy_score(labels_trans, pred_trans)
 

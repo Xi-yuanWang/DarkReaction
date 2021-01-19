@@ -214,7 +214,11 @@ recall=87%
 
 选择出来的特征和作者不尽相同，出现了文中没有提到的特征（比如'Na'/'K'/‘XXXinorg2mass’），同时更多的反应条件相关的特征被选择（尤其是‘pH’/‘purity’在两种方法的结果中都出现了，这两个看上去倒还算是靠谱）。
 
-SelectKBest并没有选择有机物的结构描述符，且用保留不同数目特征训练的决策树的预测结果变化趋势也不是单调的。用SelectKBest选择出来的结果训练的决策树表现并不尽人意。
+SelectKBest并没有选择有机物的结构描述符，且用保留不同数目特征训练的决策树的预测结果精度变化趋势也不是单调的。用SelectKBest选择出来的结果训练的决策树表现并不尽人意。变化趋势以及决策树展示如下：
+
+![](./report.assets/precision_skb.jpg)
+
+![](./report.assets/decision_tree_skb.jpg)
 
 而RFE给出了更加离谱的结果（只给出了两个负的结果，其中一个还是错的）。尽管如此，由于测试集的巨大不平衡，结果的precision、recall、accuracy看上去都非常好。作者所给出的“an accuracy of 70.7% (best-first) and 71.6% (greedy stepwise)”是否其实也是这样的结果？
 
@@ -278,7 +282,9 @@ test函数求模型在预测集上的表现，类似CV_author。
 
 **dataAnal.ipynb** 对得到的数据的分布进行分析。
 
-**outAnal.ipynb** 对模型的输出进行分析
+**outAnal.ipynb** 对模型的输出进行分析。
 
+**feature_select.py** 进行特征选择并利用选择后的特征训练决策树。
 
+**NN.py** 搭建了一个两层的神经网络分类器并进行训练。
 

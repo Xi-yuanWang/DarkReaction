@@ -117,3 +117,11 @@ def test(X, Y, x, y, Model, params, scale=True):
     print(confusion_matrix(booly, boolpred))
     return pred,model.predict(X)
 
+'''
+将模型重解释为决策树
+'''
+def reinterpret(X_model,model,X_tree):
+    pred=model.predict(X_model)
+    ret=DecisionTreeClassifier()
+    ret.fit(X_tree,pred)
+    return ret

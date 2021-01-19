@@ -18,7 +18,7 @@ from sklearn.preprocessing import Normalizer
 
 from sklearn.feature_selection import SelectKBest
 
-from header import numout2boolout
+from utils import numout2boolout
 
 # 降维处理，以训练集为标准
 def dimension_reduction(X, x, save_path_train, save_path_test):
@@ -87,8 +87,8 @@ def main():
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 加载数据
-    Y = numout2boolout(np.load("./processedData/Y_train.npy"))
-    y = numout2boolout(np.load("./processedData/y_test.npy"))
+    Y = numout2boolout(np.load("./processedData/Y/Y_train.npy"))
+    y = numout2boolout(np.load("./processedData/Y/y_test.npy"))
     #X = np.random.rand(2000)
     #x = np.random.rand(100)
     #Y = np.round(X)
@@ -109,8 +109,8 @@ def main():
     #Xx = np.load("./processedData/Xx.npy")
     #X = Xx[:len(Y), :]
     #x = Xx[len(Y):, :]
-    X = np.load("./processedData/X_train_reduced.npy")
-    x = np.load("./processedData/x_test_reduced.npy")
+    X = np.load("./processedData/X/X_train_reduced.npy")
+    x = np.load("./processedData/X/x_test_reduced.npy")
 
     skb = SelectKBest(k=10)
     X_trans = skb.fit_transform(X, Y)

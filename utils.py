@@ -1,7 +1,6 @@
 '''
 分析中常用的工具与数据
 '''
-
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
@@ -33,19 +32,19 @@ Y = np.load("./processedData/Y/Y.npy")
 y = np.load("./processedData/Y/y.npy")
 
 reactantCombination = np.load(
-    "./processedData/reactComb.npy", allow_pickle=True)
+    "./processedData/X/reactComb.npy", allow_pickle=True)
 
 reactantMask = ["XXXinorg1", "XXXinorg2", "XXXinorg3", "XXXorg1", "XXXorg2"]
 
-# 转化分类结果。结果有1，2，3，4。但是3，4对应人的预测1，1,2对应预测0
-
-
+'''
+转化分类结果。结果有1，2，3，4。但是3，4对应人的预测1，1,2对应预测0
+'''
 def numout2boolout(label):
     return label > 2.5
 
-# 作者使用的SVM核
-
-
+'''
+作者使用的SVM核, 使用了https://github.com/rlphilli/sklearn-PUK-kernel的代码
+'''
 def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):
     if X1 is X2:
         kernel = squareform(pdist(X1, 'sqeuclidean'))
@@ -55,12 +54,15 @@ def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):
     kernel = 1/kernel
     return kernel
 
-# 作者使用的交叉验证方法： 注意同一反应物组合的反应要划分在同一训练集或验证集
-
-
+'''
+作者使用的交叉验证方法： 注意同一反应物组合的反应要划分在同一训练集或验证集。
+Model是使用的模型的名称或构造函数，params为传入的参数。
+shuffle表示是否对数据重新排列
+'''
 def CV_author(X, Y, n_splits, Model, params, shuffle=True):
-    X_std = StandardScaler().fit_transform(X)
-    kf = KFold(n_splits=n_splits, shuffle=shuffle)
+    X_std = StandardScaler().fit_transform(X)# 标准化数据
+    kf = KFold(n_splits=n_splits, shuffle=shuffle) # 随机划分训练集与测试集中的反应组合
+
     for train_index_rc, test_index_rc in kf.split(reactantCombination):
         train_index = [
             i for rc in train_index_rc for i in reactantCombination[rc]]

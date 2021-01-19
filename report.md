@@ -38,7 +38,7 @@ $$
 
 作者使用3折交叉验证进行模型选择，我们也同样使用。
 
-作者使用了SVM，核函数为PUK。我们使用sklearn中的SVC进行了复现。并对数据进行标准化
+作者使用了SVM，核函数为Pearson VII。我们使用sklearn中的SVC进行了复现。并对数据进行标准化
 $$
 z=\frac{x-\mu}{\sigma}
 $$
@@ -59,7 +59,7 @@ precision=81%
 
 recall=93%
 
-使用作者使用的PUK核函数，对不同的正则化强度（软间隔大小）进行实验，交叉验证的结果如下。
+使用作者使用的Pearson VII核函数，对不同的正则化强度（控制软间隔大小）进行实验，交叉验证的结果如下。
 
 ![image-20210117085400875](report.assets/image-20210117085400875.png)
 
@@ -127,7 +127,7 @@ precision=91%
 
 recall=74%
 
-而PUK核性能没有提升。这一问题可能还是因为测试集的分布不同于训练集。
+而Pearson VII核性能没有提升。这一问题可能还是因为测试集的分布不同于训练集。
 
 我们进一步想到，1，2，3，4这四个类别是有序的，而svm的one vs rest方法并不能利用这一有序性。因此我们改为直接拟合label，而不是分类。
 
@@ -175,8 +175,6 @@ recall=87%
 
 ![image-20210117120804404](report.assets/image-20210117120804404.png)
 
-降维后回归??
-
 文献中所用的特征选择方法sklearn没有实现，此处使用了sklearn中实现的另外两种特征选择方法：SelectKBest和RFE(recursive feature elimination)，希望对作者的结果得到某种交叉验证。
 
 选择出来的特征和作者不尽相同，出现了文中没有提到的特征（比如'Na'/'K'/‘XXXinorg2mass’），同时更多的反应条件相关的特征被选择（尤其是‘pH’/‘purity’在两种方法的结果中都出现了，这两个看上去倒还算是靠谱）。
@@ -193,6 +191,53 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 很有意思的是，当使用调整抽样权重的方法平衡数据不平衡问题的时候，神经网络在测试集上达到对正负样本的recall分别为0.654/0.722（此时结果已经不再随着epoches增加），但在测试集上对正负样本的recall分别只有0.191和0.529. 负样本严重干扰了正样本的识别。
 
+# 代码结构
+
+**processData.py* 数据处理的代码。这一部分的代码虽然很短，但为了处理源数据中的各种情况而没有包装，并且使用错误处理代替正常而复杂的条件判断。处理完后保存处理好的数据于./processedData。
+
+为了简便地调用处理好的数据，以及一些通用的函数，将它们放在utils.py中。作者使用的策略是让模型产生将数据分为1，2，3，4四类，而评价模型时将1，2视作0，3，4视作1，计算精度。因此设计numout2boolout函数。
+```{python}
+def numout2boolout(label):
+    return label > 2.5
+```
+可以利用广播机制对向量进行处理，还可以转化线性回归模型的输出。
+
+作者使用的训练集验证集划分要求同一反应组合的分在同一个集合中，因此我们不使用sklearn提供的CV函数，而是先对把反应物组合划分为测试集验证集再把组合中的数据放入测试集验证集中。
+
+```{python}
+def CV_author(X, Y, n_splits, Model, params, shuffle=True):
+    X_std = StandardScaler().fit_transform(X)# 标准化数据
+    kf = KFold(n_splits=n_splits, shuffle=shuffle) # 随机划分训练集与测试集中的反应组合
+
+    for train_index_rc, test_index_rc in kf.split(reactantCombination):
+        train_index = [
+            i for rc in train_index_rc for i in reactantCombination[rc]]
+        test_index = [
+            i for rc in test_index_rc for i in reactantCombination[rc]]
+        X_train, X_test = X_std[train_index], X_std[test_index]
+        Y_train, Y_test = Y[train_index], Y[test_index]
+        model = Model(**params)
+        model.fit(X_train, Y_train)
+        pred = model.predict(X_test)
+        Y_test = numout2boolout(Y_test)
+        pred = numout2boolout(pred)
+        print("recall={:.3f}".format(
+            recall_score(Y_test, pred, average='weighted')))
+        print("precision={:.3f}".format(
+            precision_score(Y_test, pred, average="weighted")))
+        print("accuracy={:.3f}".format(accuracy_score(Y_test, pred)))
+        print("confusion matrix is")
+        print(confusion_matrix(Y_test, pred))
+```
+
+PUK_kernel是作者使用的SVM核函数，参考了以下项目:https://github.com/rlphilli/sklearn-PUK-kernel
+
+**SVC.py** 使用交叉验证方法测试不同核函数以及不同正则化强度的效果。
+
+**Linear_fit.py** 通过交叉验证方法检验不同正则化强度的线性回归方法的效果将输出重定向到了./out/Ridge.out, ./out/Lasso.out, ./out/Logistic.out
+
+
+
 # 参考文献的分析
 
 作者从实验室笔记本中收集了水热合成反应的信息，并使用商业软件添加了使用反应物名称计算得到的物理化学性质（比如有机反应物的配体分子量，氢键给体受体数，极性表面积，无机反应物的电离能，电子亲合能，电负性，硬度，原子半径，元素周期表中的位置)。数据的标签取值为1，2，3，4从小到大代表结晶结果从坏到好。以反应产生单晶或多晶为成功（3，4），反之为失败。
@@ -207,9 +252,9 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 亮点在于利用了一直被忽视的失败数据。但是研究方法并不先进，使用了最简单的支持向量机模型并且没有对参数比如软间隔大小，核函数的影响进行分析，也没有进行类别平衡。用分类树得到了化学直觉。
 
-问题：70%的成功率如何能称为失败反应??。
+问题：70%的成功率如何能称为失败反应。
 
-测试集上89%的成功率究竟是如何计算的，究竟测试集是如何生成的, 如何保证探索的都是模型有把握的。The 89% success rate of the model in the experimental test is greater than the test-set accuracy measured during model construction, because the train/test split on the historical data essentially tests only exploration reactions (for which the model uncertainty is higher), whereas these experiments test exploitation reactions (for which the model uncertainty is lower).
+测试集上89%的成功率究竟是如何计算的，我们自行计算的结果只有81%。
 
 为何不直接用分类树拟合实验结果而是拟合SVM的结果。
 

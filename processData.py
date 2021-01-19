@@ -5,10 +5,15 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-# 处理训练集,相应数据用大写字母表示
+'''
+处理训练集,相应数据用大写字母表示
+'''
 raw_train = pd.read_csv("./data/train.csv")
 Y = np.array((raw_train.loc[:, "outcome"]), dtype=np.float64)
-# 处理测试集,相应数据用小写字母表示
+
+'''
+处理测试集,相应数据用小写字母表示
+'''
 raw_test = pd.read_csv("./data/test.csv")
 human_pred = np.array(raw_test.loc[:, "XXX-Intuition"], dtype=np.float64)
 ml_pred = np.array(raw_test.loc[:, "predicted outcome"], dtype=np.float64)
@@ -18,14 +23,14 @@ np.save("./processedData/Y/y.npy", y)
 np.save("./processedData/Y/ml_pred.npy", ml_pred)
 np.save("./processedData/Y/human_pred.npy", human_pred)
 
-# 处理训练集
 rawX = raw_train.loc[:, "XXXinorg1":"purity"]
 rawx = raw_test.loc[:, "XXXinorg1":"purity"]
 
 rawXx = pd.concat([rawX, rawx])
 featureName = list(rawXx)
-
-# 对非数值类型数据进行转换
+'''
+对非数值类型数据进行转换
+'''
 X_featureName = []  # 记录每一维数据对应的特征名称
 Xx = np.array([],
               dtype=np.float64).reshape(len(rawXx), -1)
@@ -66,6 +71,7 @@ for i in featureName:
                 encoders[i] = ohe
     X_featureName += [i]*(feature.shape[1])
     Xx = np.concatenate((Xx, feature), axis=1)
+
 X = Xx[:len(rawX), :]
 x = Xx[len(rawX):, :]
 
@@ -77,7 +83,9 @@ np.save("./processedData/X/oneHotFeature.npy", oneHotFeature)
 np.save("./processedData/X/boolFeature.npy", boolFeature)
 np.save("./processedData/X/encoders.npy", encoders)
 
-# 对数据进行标准化
+'''
+对数据进行标准化
+'''
 
 scaler = StandardScaler()
 X_normalized = scaler.fit_transform(X)
@@ -85,21 +93,27 @@ x_normalized = scaler.transform(x)
 np.save("./processedData/X/X_normalized.npy", X_normalized)
 np.save("./processedData/X/x_normalized.npy", x_normalized)
 
-# 去除反应物名称
+'''
+去除反应物名称
+'''
 reactantMask = ["XXXinorg1", "XXXinorg2", "XXXinorg3", "XXXorg1", "XXXorg2"]
 mask = [i for i in range(len(X_featureName))
         if X_featureName[i] not in reactantMask]
 np.save("./processedData/X/X_masked.npy", X[:, mask])
 np.save("./processedData/X/x_masked.npy", x[:, mask])
 
-# 检验是否有异常值
+'''
+检验是否有异常值
+'''
 print("error")
 for i in range(X_normalized.shape[-1]):
     if max(abs(X_normalized[:, i])) > 3:
         print(i)
 
-
-# 对数据按反应物进行归类
+'''
+对数据按反应物进行归类。reactantCombination是一个二维数组，每个元素中存放的数据编号反应物相同。
+comb中存放反应物组合，为了保证调换反应物顺序不影响判断，使用set保存反应物名称。
+'''
 comb = []
 reactantCombination = []
 for i in range(0, len(rawX)):

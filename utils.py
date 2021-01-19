@@ -39,12 +39,17 @@ reactantMask = ["XXXinorg1", "XXXinorg2", "XXXinorg3", "XXXorg1", "XXXorg2"]
 '''
 转化分类结果。结果有1，2，3，4。但是3，4对应人的预测1，1,2对应预测0
 '''
+
+
 def numout2boolout(label):
     return label > 2.5
+
 
 '''
 作者使用的SVM核, 使用了https://github.com/rlphilli/sklearn-PUK-kernel的代码
 '''
+
+
 def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):
     if X1 is X2:
         kernel = squareform(pdist(X1, 'sqeuclidean'))
@@ -54,21 +59,23 @@ def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):
     kernel = 1/kernel
     return kernel
 
+
 '''
 作者使用的交叉验证方法： 注意同一反应物组合的反应要划分在同一训练集或验证集。
 Model是使用的模型的名称或构造函数，params为传入的参数。
 shuffle表示是否对数据重新排列
 '''
-def CV_author(X, Y, n_splits, Model, params, shuffle=True):
-    X_std = StandardScaler().fit_transform(X)# 标准化数据
-    kf = KFold(n_splits=n_splits, shuffle=shuffle) # 随机划分训练集与测试集中的反应组合
+def CV_author(X, Y, n_splits, Model, params, scale=True, shuffle=True):
+    if scale:
+        X = StandardScaler().fit_transform(X)  # 标准化数据
+    kf = KFold(n_splits=n_splits, shuffle=shuffle)  # 随机划分训练集与测试集中的反应组合
 
     for train_index_rc, test_index_rc in kf.split(reactantCombination):
         train_index = [
             i for rc in train_index_rc for i in reactantCombination[rc]]
         test_index = [
             i for rc in test_index_rc for i in reactantCombination[rc]]
-        X_train, X_test = X_std[train_index], X_std[test_index]
+        X_train, X_test = X[train_index], X[test_index]
         Y_train, Y_test = Y[train_index], Y[test_index]
         model = Model(**params)
         model.fit(X_train, Y_train)
@@ -82,3 +89,31 @@ def CV_author(X, Y, n_splits, Model, params, shuffle=True):
         print("accuracy={:.3f}".format(accuracy_score(Y_test, pred)))
         print("confusion matrix is")
         print(confusion_matrix(Y_test, pred))
+
+
+'''
+在测试集上验证
+'''
+
+
+def test(X, Y, x, y, Model, params, scale=True):
+    if scale:
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)  # 标准化数据
+        x = scaler.transform(x)
+
+    model = Model(**params)
+    model.fit(X, Y)
+    pred = model.predict(x)
+    boolpred = numout2boolout(pred)
+    booly = numout2boolout(y)
+
+    print("recall={:.3f}".format(
+        recall_score(booly, boolpred, average='weighted')))
+    print("precision={:.3f}".format(
+        precision_score(booly, boolpred, average="weighted")))
+    print("accuracy={:.3f}".format(accuracy_score(booly, boolpred)))
+    print("confusion matrix is")
+    print(confusion_matrix(booly, boolpred))
+    return pred,model.predict(X)
+

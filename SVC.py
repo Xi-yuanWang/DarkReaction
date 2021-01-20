@@ -28,6 +28,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
 from utils import PUK_kernel,Y,y,numout2boolout,reactantCombination
 
+
+X_masked = np.load("./processedData/X/X_masked.npy")
+kernelName=["PUK","rbf","sigmoid"]
+
+# 作出学习曲线
+score=learning_curve(X_masked,Y,SVC,{"C":10,"kernel":PUK_kernel},400,3)
+np.save("./out/lc_score",score)
+
 # 交叉验证方法
 def CV(X, Y, Model, params, n_splits=3, numlabel=True, shuffle=True):
     X_std = StandardScaler().fit_transform(X)
@@ -52,9 +60,6 @@ def CV(X, Y, Model, params, n_splits=3, numlabel=True, shuffle=True):
         prec += precision_score(Y_test, pred, average="weighted")
         acc += accuracy_score(Y_test, pred)
     return [rec/n_splits, prec/n_splits, acc/n_splits]
-
-X_masked = np.load("./processedData/X/X_masked.npy")
-kernelName=["PUK","rbf","sigmoid"]
 
 for i, kernel in enumerate([PUK_kernel,"rbf","sigmoid"]):
     result = []

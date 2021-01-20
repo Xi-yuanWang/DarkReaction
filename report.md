@@ -161,11 +161,19 @@ accuracy =53%, precision=85%, recall=51%
 
 <center>图7: 交叉验证性能与正则化强度的关系</center>
 
+尝试减小训练数据数目，防止过拟合，但是学习曲线如下图所示
+
+![image-20210120163813570](report.assets/image-20210120163813570.png)
+
+<center>图8: 交叉验证性能与正则化强度的关系</center>
+
+发现学习的样本数目在1000左右时交叉验证性能最好，但是尝试发现这并没有给在测试集上的性能带来提升。
+
 在测试过程中，我们发现了有趣的事实：直接使用successful/failed（boolY）进行训练，pearson VII核SVM得到的交叉验证结果比使用1，2，3，4(numY)的结果差。
 
 ![image-20210117094922151](report.assets/image-20210117094922151.png)
 
-<center>图8: 交叉验证性能与正则化强度的关系</center>
+<center>图9: 交叉验证性能与正则化强度的关系</center>
 
 但是更有趣的是在使用0，1作为标签后rbf核虽然交叉验证的precision下降了，但是在测试集上的效果更好了。
 
@@ -193,7 +201,7 @@ accuracy =70%, precision=81%, recall=83%
 
 ![image-20210117103413666](report.assets/image-20210117103413666.png)
 
-<center>图9: 线性回归交叉验证性能与正则化强度的关系</center>
+<center>图10: 线性回归交叉验证性能与正则化强度的关系</center>
 
 尝试通过斜率的大小判定一个参数,但是观察到Lasso回归与岭回归在正则化强度很高时性能下降，并且出现了只能预测为成功的现象，说明将斜率小的特征忽略是不合理的。
 
@@ -212,13 +220,14 @@ accuracy =72%, precision=81%, recall=87%
 
 ![image-20210117115931142](report.assets/image-20210117115931142.png)
 
-<center>图10: 线性回归预测值分布的直方图</center>
+<center>图11: 线性回归预测值分布的直方图</center>
 
 阈值可以在2.25到3.00之间调节，由于我们最在意的是precision，因此不做出ROC曲线而是作出precision随阈值变化的曲线。
 
 出人意料的是阈值越大测试集上的precision越低，但是在验证集上没有这个问题。猜测还是测试集与训练集的数据显著不同。
 
 ![image-20210119202835376](report.assets/image-20210119202835376.png)
+<center>图12: 线性回归预测值分布的直方图</center>
 
 
 总结一下，各线性模型的交叉验证和在测试集上的表现如表2所示
@@ -241,11 +250,11 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 ![](./report.assets/precision_skb.jpg)
 
-<center>图11: 特征数目与决策树模型的表现</center>
+<center>图13: 特征数目与决策树模型的表现</center>
 
 ![](./report.assets/decision_tree_skb.jpg)
 
-<center>图12: 作出的决策树模型</center>
+<center>图14: 作出的决策树模型</center>
 
 而RFE给出了更加离谱的结果（只给出了两个负的结果，其中一个还是错的）。尽管如此，由于测试集与验证集的巨大不平衡，结果的precision、recall、accuracy看上去都非常好。作者所给出的“an accuracy of 70.7% (best-first) and 71.6% (greedy stepwise)”是否其实也是这样的结果？
 
@@ -320,6 +329,8 @@ def CV_author(X, Y, n_splits, Model, params, scale=True, shuffle=True):
 test函数求模型在预测集上的表现，类似CV_author。test与author函数实现了数据的标准化。
 
 PUK_kernel是作者使用的SVM核函数，参考了以下项目:https://github.com/rlphilli/sklearn-PUK-kernel
+
+learning_curve可以绘制学习曲线。
 
 **SVC.py** 使用交叉验证方法测试不同核函数以及不同正则化强度的效果。
 

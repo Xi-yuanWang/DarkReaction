@@ -146,3 +146,43 @@ def reinterpret(X_model,model,X_tree):
     ret=DecisionTreeClassifier()
     ret.fit(X_tree,pred)
     return ret
+
+'''
+作出学习曲线
+'''
+
+def learning_curve(X, Y, Model, params, pace, n_splits, scale=True):
+    if scale:
+        X = StandardScaler().fit_transform(X)  # 标准化数据
+    kf = KFold(n_splits=n_splits, shuffle=True)  # 随机划分训练集与测试集中的反应组合
+
+    for train_index_rc, test_index_rc in kf.split(reactantCombination):
+        break
+    train_index = [
+        i for rc in train_index_rc for i in reactantCombination[rc]]
+    test_index = [
+        i for rc in test_index_rc for i in reactantCombination[rc]]
+    X_train, X_test = X[train_index], X[test_index]
+    Y_train, Y_test = Y[train_index], Y[test_index]
+    Y_test = numout2boolout(Y_test)
+    score = [[[], [], []], [[], [], []]]
+    for i in range(pace, len(train_index), pace):
+        model = Model(**params)
+        model.fit(X_train[:i], Y_train[:i])
+        pred = model.predict(X_test)
+        pred = numout2boolout(pred)
+        ppred = model.predict(X_train[:i])
+        ppred = numout2boolout(ppred)
+        score[0][0].append(
+            recall_score(Y_test, pred, average='weighted'))
+        score[0][1].append(
+            precision_score(Y_test, pred, average="weighted"))
+        score[0][2].append(accuracy_score(Y_test, pred))
+
+        score[1][0].append(
+            recall_score(numout2boolout(Y_train[:i]), ppred, average='weighted'))
+        score[1][1].append(
+            precision_score(numout2boolout(Y_train[:i]), ppred, average="weighted"))
+        score[1][2].append(accuracy_score(numout2boolout(Y_train[:i]), ppred))
+
+    return score

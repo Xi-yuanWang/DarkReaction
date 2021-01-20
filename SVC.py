@@ -29,7 +29,7 @@ from sklearn.model_selection import KFold
 from utils import PUK_kernel,Y,y,numout2boolout,reactantCombination
 
 
-X_masked = np.load("./processedData/X/X_masked.npy")
+X_masked = np.load("./processedData/X/X_train_masked.npy")
 kernelName=["PUK","rbf","sigmoid"]
 
 # 作出学习曲线

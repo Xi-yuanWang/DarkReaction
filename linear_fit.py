@@ -25,7 +25,7 @@ from utils import CV_author, Y, y, numout2boolout
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, LogisticRegression
 
 # 简单的线性回归
-X_masked = np.load("./processedData/X/X_masked.npy")
+X_masked = np.load("./processedData/X/X_train_masked.npy")
 CV_author(X_masked, Y, 3, LinearRegression, {})
 
 # 使用降维后的数据线性回归, 性能差于不降维线性回归

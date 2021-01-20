@@ -35,8 +35,8 @@ raw_test = pd.read_csv("./data/test.csv")
 human_pred = np.array(raw_test.loc[:, "XXX-Intuition"], dtype=np.float64)
 ml_pred = np.array(raw_test.loc[:, "predicted outcome"], dtype=np.float64)
 y = np.array(raw_test.loc[:, "outcome (actual)"], dtype=np.float64)
-np.save("./processedData/Y/Y.npy", Y)
-np.save("./processedData/Y/y.npy", y)
+np.save("./processedData/Y/Y_train.npy", Y)
+np.save("./processedData/Y/y_test.npy", y)
 np.save("./processedData/Y/ml_pred.npy", ml_pred)
 np.save("./processedData/Y/human_pred.npy", human_pred)
 
@@ -92,8 +92,8 @@ for i in featureName:
 X = Xx[:len(rawX), :]
 x = Xx[len(rawX):, :]
 
-np.save("./processedData/X/X.npy", X)
-np.save("./processedData/X/x.npy", x)
+np.save("./processedData/X/X_train.npy", X)
+np.save("./processedData/X/x_test.npy", x)
 np.save("./processedData/X/X_featureName.npy", X_featureName)
 np.save("./processedData/X/errorFeature.npy", errorFeature)
 np.save("./processedData/X/oneHotFeature.npy", oneHotFeature)
@@ -107,8 +107,8 @@ np.save("./processedData/X/encoders.npy", encoders)
 scaler = StandardScaler()
 X_normalized = scaler.fit_transform(X)
 x_normalized = scaler.transform(x)
-np.save("./processedData/X/X_normalized.npy", X_normalized)
-np.save("./processedData/X/x_normalized.npy", x_normalized)
+np.save("./processedData/X/X_train_normalized.npy", X_normalized)
+np.save("./processedData/X/x_test_normalized.npy", x_normalized)
 
 '''
 去除反应物名称
@@ -116,8 +116,8 @@ np.save("./processedData/X/x_normalized.npy", x_normalized)
 reactantMask = ["XXXinorg1", "XXXinorg2", "XXXinorg3", "XXXorg1", "XXXorg2"]
 mask = [i for i in range(len(X_featureName))
         if X_featureName[i] not in reactantMask]
-np.save("./processedData/X/X_masked.npy", X[:, mask])
-np.save("./processedData/X/x_masked.npy", x[:, mask])
+np.save("./processedData/X/X_train_masked.npy", X[:, mask])
+np.save("./processedData/X/x_test_masked.npy", x[:, mask])
 
 '''
 检验是否有异常值

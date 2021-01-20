@@ -93,11 +93,10 @@ def main():
 
     weights = [weights_of_lable[int(i)] for i in Y]
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights, len(weights))
-    #Xx = np.load("./processedData/Xx.npy")
-    #X = Xx[:len(Y), :]
-    #x = Xx[len(Y):, :]
-    X = np.load("./processedData/X/X_train_reduced.npy")
-    x = np.load("./processedData/X/x_test_reduced.npy")
+    X = np.load("./processedData/X_train_masked.npy")
+    x = np.load("./processedData/x_test_masked.npy")
+    #X = np.load("./processedData/X/X_train_reduced.npy")
+    #x = np.load("./processedData/X/x_test_reduced.npy")
 
     # 对数据进行特征选择处理
     skb = SelectKBest(k=10)

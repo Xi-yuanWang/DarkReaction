@@ -1,3 +1,21 @@
+"""
+System Environment
+OS: Windows 10 家庭中文版
+CPU: intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz 2.80GHz
+GPU: GeForce GTX 1050
+CUDA 9.1.84
+Memory: 16 GiB
+
+Python Environment
+python 3.7.4 (anaconda)
+numpy 1.16.5 
+pandas 0.25.1
+pytorch 1.1.0
+scikit-learn 0.21.3
+scipy 1.3.1
+matplotlib 3.1.1
+"""
+
 '''
 分析中常用的工具与数据
 '''
@@ -68,6 +86,7 @@ def PUK_kernel(X1, X2, sigma=1.0, omega=1.0):
 作者使用的交叉验证方法： 注意同一反应物组合的反应要划分在同一训练集或验证集。
 Model是使用的模型的名称或构造函数，params为传入的参数。
 shuffle表示是否对数据重新排列
+scale表示是否对数据进行标准化
 '''
 def CV_author(X, Y, n_splits, Model, params, scale=True, shuffle=True):
     if scale:
@@ -96,10 +115,8 @@ def CV_author(X, Y, n_splits, Model, params, scale=True, shuffle=True):
 
 
 '''
-在测试集上验证
+在测试集上验证。对数据进行标准化
 '''
-
-
 def test(X, Y, x, y, Model, params, scale=True):
     if scale:
         scaler = StandardScaler()

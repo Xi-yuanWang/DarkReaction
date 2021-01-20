@@ -1,4 +1,21 @@
 """
+System Environment
+OS: Windows 10 家庭中文版
+CPU: intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz 2.80GHz
+GPU: GeForce GTX 1050
+CUDA 9.1.84
+Memory: 16 GiB
+
+Python Environment
+python 3.7.4 (anaconda)
+numpy 1.16.5 
+pandas 0.25.1
+pytorch 1.1.0
+scikit-learn 0.21.3
+scipy 1.3.1
+matplotlib 3.1.1
+"""
+"""
 created: 2021/1/3
 training & predicting part copied from TA's code.
 """

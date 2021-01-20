@@ -31,7 +31,8 @@ from sklearn.tree import plot_tree
 from utils import CV_author, PUK_kernel, numout2boolout, reinterpret
 
 
-Xx = np.load("./processedData/X/Xx.npy")
+X = np.load("./processedData/X/X_train.npy")
+x = np.load("./processedData/X/x_test.npy")
 Y = np.load("./processedData/Y/Y_train.npy")
 y = np.load("./processedData/Y/y_test.npy")
 

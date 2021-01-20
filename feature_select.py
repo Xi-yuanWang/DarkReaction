@@ -86,8 +86,6 @@ def decide_num():
     plt.savefig("./precision_skb.jpg")
 
 # 使用RFE(recursive feature elimination)方法进行特征选择
-
-
 def use_RFE(n, print_log=True, interpret_tree=False):
     """in:
     n: int, # of features to be selected
@@ -132,6 +130,6 @@ def use_RFE(n, print_log=True, interpret_tree=False):
 
 
 if __name__ == "__main__":
-    #use_SelectKBest(n=8, interpret_tree=True)
+    # use_SelectKBest(n=8, interpret_tree=True)
     # decide_num()
     use_RFE(n=8, interpret_tree=False)

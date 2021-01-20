@@ -1,5 +1,6 @@
 """
 created: 2021/1/3
+training & predicting part copied from TA's code.
 """
 
 import numpy as np
@@ -43,30 +44,6 @@ def dimension_reduction(X, x, save_path_train, save_path_test):
 class simple_NN(nn.Module):
     def __init__(self, n_in, n_hidden1, n_hidden2):
         super(simple_NN, self).__init__()
-        #self.layer1 = nn.Sequential(
-        #    OrderedDict(
-        #        [
-        #            ("fc1", nn.Linear(n_in, n_hidden1)),
-        #            ("activation1",nn.Tanh()) #nn.ReLU())
-        #        ]
-        #    )
-        #)
-        #self.layer2 = nn.Sequential(
-        #    OrderedDict(
-        #        [
-        #            ("fc2", nn.Linear(n_hidden1, n_hidden2)),
-        #            ("activation2", nn.Tanh())
-        #        ]
-        #    )
-        #)
-        #self.out_layer = nn.Sequential(
-        #    OrderedDict(
-        #        [
-        #            ("fc2", nn.Linear(n_hidden2, 2)),
-        #            ("output", nn.Sigmoid())
-        #        ]
-        #    )
-        #)
         self.fc1 = nn.Linear(n_in, n_hidden1)
         self.fc2 = nn.Linear(n_hidden1, n_hidden2)
         self.fc3 = nn.Linear(n_hidden2, 2)
@@ -89,13 +66,6 @@ def main():
     # 加载数据
     Y = numout2boolout(np.load("./processedData/Y/Y_train.npy"))
     y = numout2boolout(np.load("./processedData/Y/y_test.npy"))
-    #X = np.random.rand(2000)
-    #x = np.random.rand(100)
-    #Y = np.round(X)
-    #y = np.round(x)
-    #X = np.reshape(X, (2000, 1))
-    #x = np.reshape(x, (100, 1))
-    #print(np.shape(x))
 
     weights_of_lable = np.zeros(2)
     print("# of labels in Y:")
@@ -112,6 +82,7 @@ def main():
     X = np.load("./processedData/X/X_train_reduced.npy")
     x = np.load("./processedData/X/x_test_reduced.npy")
 
+    # 对数据进行特征选择处理
     skb = SelectKBest(k=10)
     X_trans = skb.fit_transform(X, Y)
     x_trans = skb.transform(x)
@@ -126,14 +97,13 @@ def main():
     test_data_loader = DataLoader(test_data, batch_size=8, shuffle=True)
 
     # 构造模型
-    model = simple_NN(np.shape(X)[1], 8, 8)#.to(DEVICE)
+    model = simple_NN(np.shape(X)[1], 8, 8)
     optimizer = torch.optim.Adam(
         model.parameters(),
         lr=learning_rate,
         weight_decay=weight_decay)
     #criterion = nn.NLLLoss(reduction='sum')
     criterion = nn.CrossEntropyLoss()
-    #scheduler = StepLR(optimizer, 10, 0.9)
 
     # 训练
     model.train()
@@ -150,14 +120,13 @@ def main():
             # Backward
             loss.backward()
             optimizer.step()
-            #scheduler.step()
-            #print(model.layer1[0].weight.grad)
         
         if (epoch + 1) % log_interval == 0:
             print("Epoch = {0}, loss = {1:.5f}".format(
                 epoch + 1, loss.data.float()))
     
     # 测试
+    # 这一段是为了观察是否有收敛
     model.eval()
     print("Predicting...")
     with torch.no_grad():
@@ -190,6 +159,7 @@ def main():
         print('Test precision = {0:.5f}'.format(precision))
         print('Test recall = {0:.5f}'.format(recall))
 
+    # 测试集上的结果
     with torch.no_grad():
         labels, pred = np.array([]), np.array([])
         loss_sum = 0.

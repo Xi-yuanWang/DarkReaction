@@ -29,6 +29,8 @@
 
 如果作者先考虑对MOF根据结构特征以及一些底物组合特征进行聚类，再对各个类各自进行这样的处理，结果是否会更好，而分析结果得到的规律是否能够给出更加清晰的化学图像？
 
+
+
 # 数据处理与分析
 
 作者开放了使用的数据，并且已经划分成了训练集[train.csv][./data/train.csv]与测试集[test.csv][./data/test.csv]。每个数据有264维。有标签，值为1，2，3，4从低到高代表结晶情况从好到坏。
@@ -230,6 +232,24 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 很有意思的是，当使用调整抽样权重的方法平衡数据不平衡问题的时候，神经网络在测试集上达到对正负样本的recall分别为0.654/0.722（此时结果已经不再随着epoches增加），但在测试集上对正负样本的recall分别只有0.191和0.529. 负样本严重干扰了正样本的识别。
 
+另一方面，考虑到文献中使用了决策树来评估特征选择的结果，我们可以进一步的尝试构建一个随机森林。使用了全数据集的结果在训练集和测试集上给出了0.834和0.841的accuracy。
+
+随机森林给出的前九个特征重要度展示如下。使用这种方式选择出来的特征相对更加接近于作者的期望，尽管具有相同量级重要度的特征约有20多个。
+
+| rank | feature                       | importance |
+| ---- | ----------------------------- | ---------- |
+| 1    | AtomicRadiusMinWeighted       | 0.0279     |
+| 2    | EAMinWeighted                 | 0.0229     |
+| 3    | hardnessMinWeighted           | 0.0227     |
+| 4    | XXXinorg2mass                 | 0.0224     |
+| 5    | PearsonElectronegMeanWeighted | 0.0199     |
+| 6    | hardnessMaxWeighted           | 0.0198     |
+| 7    | org-water-moleratio           | 0.0196     |
+| 8    | EAMaxWeighted                 | 0.0195     |
+| 9    | AtomicRadiusGeomWeighted      | 0.0193     |
+
+
+
 # 代码结构
 
 **processData.py* 数据处理的代码。这一部分的代码虽然很短，但为了处理源数据中的各种情况而没有包装，并且使用错误处理代替正常而复杂的条件判断。处理完后保存处理好的数据于./processedData。
@@ -287,6 +307,8 @@ test函数求模型在预测集上的表现，类似CV_author。
 **feature_select.py** 进行特征选择并利用选择后的特征训练决策树。
 
 **NN.py** 搭建了一个两层的神经网络分类器并进行训练。
+
+**randomforest.py** 训练随机森林，优化并给出特征重要度。
 
 # 每个人的工作
 王希元：原始数据处理与分析(processData.py)，SVM(SVC.py)，线性回归方法(linear_fit.py), dataAnal.ipynb, outAnal.ipynb

@@ -1,11 +1,16 @@
 
 # 参考文献的分析
 
+Raccuglia, P., Elbert, K., Adler, P. et al. Machine-learning-assisted materials discovery using failed experiments. Nature 533, 73–76 (2016). https://doi.org/10.1038/nature17439
+
 作者从实验室笔记本中收集了水热合成反应的信息，并使用化学信息学软件添加了使用反应物名称计算得到的物理化学性质（比如有机反应物的配体分子量，氢键给体受体数，极性表面积，无机反应物的电离能，电子亲合能，电负性，硬度，原子半径，元素周期表中的位置)。数据的标签取值为1，2，3，4从小到大代表结晶结果从坏到好。以反应产生单晶或多晶为成功（3，4），反之为失败。
 
 从这些数据中划分出测试集与验证集。以此使用weka软件训练机器学习模型来预测新反应的结果。虽然训练时的标签分为4类，但是评估模型时将分类结果化为成功与失败。使用不同模型得到的交叉验证结果(三折，反应物生成物取平均)如下，其中支持向量机（Pearson VII核）的表现最好，准确率达到了74%。
 
+<center><bold>表1</bold>: 作者使用的各模型的性能</center>
+
 ![image-20210118001838174](report.assets/image-20210118001838174.png)
+
 
 使用Weka库中的cfsSubseEval拥有的两种选择方法：最佳优先法和贪婪逐步法，按各特征对分类效果的影响进行选择。两种方法得到的最重要的6个特征不同，但是训练出来的模型交叉验证都得到了70%左右的准确率。由于使用选择后的特征导致支持向量机的性能下降，仍然使用全部数据训练支持向量机。
 
@@ -33,7 +38,7 @@
 
 可以用委员会方法或者其他不是硬分类的方法给出成功的概率，并进行探索与利用的平衡。每次探索新的反应时综合考虑成功的概率以及对这一反应的了解程度，选择越策方差大或者成功概率大的反应，而不是像文献中的利用新反应物与已有反应物的相似程度来探索新的反应。此外，关于描述符的构建除了作者提供的简单的物化性质外，可以加入分子动力学模拟或量子化学方法得到的与微观结构相关的信息。
 
-此外关于实验本身，可以用更精细的指标衡量结果的好坏，比如结晶的程度定量化为一个连续的数值。这样的话可以用回归模型（而不是分类）来处理这一问题。
+此外关于实验本身，可以用更精细的指标衡量结果的好坏，比如结晶的程度定量化为一个连续的数值。这样的话更适合用回归模型（而不是分类）来处理这一问题。
 
 # 数据处理与分析
 
@@ -57,23 +62,33 @@ $$
 
 ![image-20210116233752488](report.assets/image-20210116233752488.png)
 
+<center>图1: 训练集中成功与失败数据的比例</center>
+
 可以看出，大部分反应成功，类别明显不均衡。
 
 而测试集的数据更不均衡
 
 ![image-20210117091643240](report.assets/image-20210117091643240.png)
 
+<center>图2: 测试集中成功与失败数据的比例</center>
+
 对不同反应物类型的反应分组，得到每组中反应个数的分布如下。最大的一组由175个反应，绝大多数反应物组合的反应数目在20以下。
 
 ![image-20210116234120455](report.assets/image-20210116234120455.png)
+
+<center>图3: 每组反应物反应个数的分布</center>
 
 为了考察反应物类型对反应结果的影响，对每个反应物组合，所有反应中成功反应的比例。发现反应物名称对反应结果有重大影响。但是作者的意图是发现新反应，因此将反应物名称从特征中剔除。
 
 ![image-20210116234807844](report.assets/image-20210116234807844.png)
 
+<center>图4: 每组反应物反应成功比例的分布</center>
+
 # 模型选择
 
-作者使用3折交叉验证进行超参数调节，我们也同样使用。但是由于算力不足，我们没有像作者一样重复15次对结果取平均。
+作者使用3折交叉验证进行超参数调节与模型评价，我们也同样使用。但是由于算力不足，我们没有像作者一样重复15次对结果取平均。
+
+作者的衡量指标是accuracy，但我们认为这毫无意义，只要全部预测为1即可达到70%以上（即作者的模型的水平）。我们综合观察混淆矩阵，精度，召回率，准确率。由于实验代价比训练模型代价高，因此最看重精度。我们预测集上精度最高的模型达到了90%，而交叉验证的结果精度普遍超过了80%。就作者给出的训练集与测试集，我们做的更好。
 
 作者使用了SVM，核函数为Pearson VII。我们使用sklearn中的SVC进行了复现。并对数据进行标准化
 $$
@@ -91,15 +106,13 @@ $$
 | true label 1 | 212          | 13           |
 | true label 0 | 48           | 3            |
 
-accuracy=81%
-
-precision=81%
-
-recall=93%
+accuracy=81%, precision=81%, recall=93%
 
 使用作者使用的Pearson VII核函数，对不同的正则化强度（控制软间隔大小）进行实验，交叉验证的结果如下。
 
 ![image-20210117085400875](report.assets/image-20210117085400875.png)
+
+<center>图5: 交叉验证性能与正则化强度的关系</center>
 
 设C=10，得到支持向量机模型应用于测试集上，发现效果极差，混淆矩阵为
 
@@ -108,11 +121,7 @@ recall=93%
 | true label 1 | 225          | 0            |
 | true label 0 | 51           | 0            |
 
-accuracy =81%
-
-precision=81%
-
-recall=100%
+accuracy =81%, precision=81%, recall=100%
 
 但是这个模型是全然无用的，无法预测0。
 
@@ -133,6 +142,8 @@ rbf核，3折交叉验证结果如下，recall与另外两条曲线重合。
 
 ![image-20210117092823421](report.assets/image-20210117092823421.png)
 
+<center>图6: 交叉验证性能与正则化强度的关系</center>
+
 使用C=100，得到的模型性能如下
 
 |              | prediction 1 | prediction 0 |
@@ -140,21 +151,21 @@ rbf核，3折交叉验证结果如下，recall与另外两条曲线重合。
 | true label 1 | 116          | 109          |
 | true label 0 | 20           | 31           |
 
-accuracy =53%
+accuracy =53%, precision=85%, recall=51%
 
-precision=85%
-
-recall=51%
-
-虽然这一模型的recall很低，但是precision非常高。由于实验代价比理论代价高，因此precision更为重要。
+虽然这一模型的recall很低，但是precision非常高。
 
 而使用sigmoid核，CV性能较差且不稳定。
 
 ![image-20210119202109113](report.assets/image-20210119202109113.png)
 
-在测试过程中，我们发现了有趣的事实：直接使用successful/failed进行训练，pearson VII核SVM得到的CV值比使用1，2，3，4训练效果差。
+<center>图7: 交叉验证性能与正则化强度的关系</center>
+
+在测试过程中，我们发现了有趣的事实：直接使用successful/failed（boolY）进行训练，pearson VII核SVM得到的交叉验证结果比使用1，2，3，4(numY)的结果差。
 
 ![image-20210117094922151](report.assets/image-20210117094922151.png)
+
+<center>图8: 交叉验证性能与正则化强度的关系</center>
 
 但是更有趣的是在使用0，1作为标签后rbf核虽然交叉验证的precision下降了，但是在测试集上的效果更好了。
 
@@ -163,11 +174,7 @@ recall=51%
 | true label 1 | 167          | 58           |
 | true label 0 | 16           | 35           |
 
-accuracy =73%
-
-precision=91%
-
-recall=74%
+accuracy =73%, precision=91%, recall=74%
 
 而Pearson VII核性能没有提升。这一问题可能还是因为测试集的分布不同于训练集。
 
@@ -180,17 +187,15 @@ recall=74%
 | true label 1 | 188          | 37           |
 | true label 0 | 44           | 7            |
 
-accuracy =70%
+accuracy =70%, precision=81%, recall=83%
 
-precision=81%
-
-recall=83%
-
-考虑到有大量特征，因此进行了正则化，尝试了Lasso回归，Ridge回归，Logistic回归。三折交叉验证计算不同正则化强度下的得分，但是性能提升不大。
+考虑到有大量特征，因此进行了正则化，尝试了Lasso回归，Ridge回归，Logistic回归。三折交叉验证计算不同正则化强度下的得分，但是较简单的线性回归性能提升不大。
 
 ![image-20210117103413666](report.assets/image-20210117103413666.png)
 
-尝试通过斜率的大小判定一个参数,但是观察到Lasso回归与岭回归表现在正则化强度很高时性能下降，说明将斜率小的因素忽略会引发问题。
+<center>图9: 线性回归交叉验证性能与正则化强度的关系</center>
+
+尝试通过斜率的大小判定一个参数,但是观察到Lasso回归与岭回归在正则化强度很高时性能下降，并且出现了只能预测为成功的现象，说明将斜率小的特征忽略是不合理的。
 
 使用性能最高C=0.1的Lasso回归对测试集进行预测。
 
@@ -199,23 +204,34 @@ recall=83%
 | true label 1 | 196          | 29           |
 | true label 0 | 46           | 5            |
 
-accuracy =72%
-
-precision=81%
-
-recall=87%
+accuracy =72%, precision=81%, recall=87%
 
 与简单的线性回归差别不大
 
-尝试调整阈值，作出预测值分布的直方图
+尝试调整阈值，作出预测值分布的直方图，发现测试集的预测结果大多是分布在2.25-3.25之间
 
 ![image-20210117115931142](report.assets/image-20210117115931142.png)
 
-阈值可以在2.25到3.00之间调节，由于我们在意的是precision，因此不做出ROC曲线而是作出precision随阈值变化的曲线。
+<center>图10: 线性回归预测值分布的直方图</center>
+
+阈值可以在2.25到3.00之间调节，由于我们最在意的是precision，因此不做出ROC曲线而是作出precision随阈值变化的曲线。
 
 出人意料的是阈值越大测试集上的precision越低，但是在验证集上没有这个问题。猜测还是测试集与训练集的数据显著不同。
 
 ![image-20210119202835376](report.assets/image-20210119202835376.png)
+
+
+总结一下，各线性模型的交叉验证和在测试集上的表现如表2所示
+
+<center>表2: 各模型的表现</center>
+
+| 模型                   | CV-precision | CV-recall | test-precision | test-recall |
+| ---------------------- | ------------ | --------- | -------------- | ----------- |
+| 作者(SVM(pearson VII)) |              |           | 89%(存疑)      |             |
+| SVM(pearson VII)       | 76%          | 75%       | 81%            | 81%         |
+| SVM(rbf, numY)         | 75%          | 75%       | 85%            | 51%         |
+| SVM(rbf, boolY)        |              |           | 90%            | 73%         |
+| Lasso                  | 84%          | 80%       | 81%            | 87%         |
 
 文献中所用的特征选择方法sklearn没有实现，此处使用了sklearn中实现的另外两种特征选择方法：SelectKBest和RFE(recursive feature elimination)，希望对作者的结果得到某种交叉验证。
 
@@ -225,7 +241,11 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 ![](./report.assets/precision_skb.jpg)
 
+<center>图11: 特征数目与决策树模型的表现</center>
+
 ![](./report.assets/decision_tree_skb.jpg)
+
+<center>图12: 作出的决策树模型</center>
 
 而RFE给出了更加离谱的结果（只给出了两个负的结果，其中一个还是错的）。尽管如此，由于测试集与验证集的巨大不平衡，结果的precision、recall、accuracy看上去都非常好。作者所给出的“an accuracy of 70.7% (best-first) and 71.6% (greedy stepwise)”是否其实也是这样的结果？
 
@@ -240,6 +260,8 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 另一方面，考虑到文献中使用了决策树来评估特征选择的结果，我们可以进一步的尝试构建一个随机森林。使用了全数据集的结果在训练集和测试集上给出了0.834和0.841的accuracy。
 
 随机森林给出的前九个特征重要度展示如下。使用这种方式选择出来的特征相对更加接近于作者的期望，尽管具有相同量级重要度的特征约有20多个。
+
+<center>表3：重要特征</center>
 
 | rank | feature                       | importance |
 | ---- | ----------------------------- | ---------- |
@@ -259,7 +281,7 @@ SelectKBest并没有选择有机物的结构描述符，且用保留不同数目
 
 **processData.py** 数据处理的代码。这一部分的代码虽然很短，但为了处理源数据中的各种情况而没有包装，并且使用错误处理代替正常而复杂的条件判断。处理完后保存处理好的数据于./processedData。
 
-为了简便地调用处理好的数据，以及一些通用的函数，将它们放在utils.py中。作者使用的策略是让模型产生将数据分为1，2，3，4四类，而评价模型时将1，2视作0，3，4视作1，计算precision。因此设计numout2boolout函数。
+**utils.py**为了简便地调用处理好的数据，以及一些通用的函数，将它们放在一个文件中。作者使用的策略是让模型产生将数据分为1，2，3，4四类，而评价模型时将1，2视作0，3，4视作1，计算precision。因此设计numout2boolout函数。
 ```{python}
 def numout2boolout(label):
     return label > 2.5
@@ -295,25 +317,25 @@ def CV_author(X, Y, n_splits, Model, params, scale=True, shuffle=True):
         print(confusion_matrix(Y_test, pred))
 ```
 
-PUK_kernel是作者使用的SVM核函数，参考了以下项目:https://github.com/rlphilli/sklearn-PUK-kernel
+test函数求模型在预测集上的表现，类似CV_author。test与author函数实现了数据的标准化。
 
-test函数求模型在预测集上的表现，类似CV_author。
+PUK_kernel是作者使用的SVM核函数，参考了以下项目:https://github.com/rlphilli/sklearn-PUK-kernel
 
 **SVC.py** 使用交叉验证方法测试不同核函数以及不同正则化强度的效果。
 
 **Linear_fit.py** 通过交叉验证方法检验不同正则化强度的线性回归方法的效果将输出重定向到了./out/Ridge.out, ./out/Lasso.out, ./out/Logistic.out
-
-由于对得到的数据进行作图与分析的过程比较灵活，因此使用jupyter notebook。
-
-**dataAnal.ipynb** 对得到的数据的分布进行分析。
-
-**outAnal.ipynb** 对模型的输出进行分析。
 
 **feature_select.py** 进行特征选择并利用选择后的特征训练决策树。
 
 **NN.py** 搭建了一个两层的神经网络分类器并进行训练。
 
 **randomforest.py** 训练随机森林，优化并给出特征重要度。
+
+由于对得到的数据进行作图与分析的过程比较灵活，因此使用jupyter notebook。
+
+**dataAnal.ipynb** 对得到的数据的分布进行分析。
+
+**outAnal.ipynb** 对模型的输出进行分析。
 
 # 每个人的工作
 王希元：原始数据处理与分析(processData.py)，SVM(SVC.py)，线性回归方法(linear_fit.py), dataAnal.ipynb, outAnal.ipynb

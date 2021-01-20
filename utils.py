@@ -44,10 +44,10 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-X = np.load("./processedData/X/X.npy")
-x = np.load("./processedData/X/x.npy")
-Y = np.load("./processedData/Y/Y.npy")
-y = np.load("./processedData/Y/y.npy")
+X = np.load("./processedData/X/X_train.npy")
+x = np.load("./processedData/X/x_test.npy")
+Y = np.load("./processedData/Y/Y_train.npy")
+y = np.load("./processedData/Y/y_test.npy")
 
 reactantCombination = np.load(
     "./processedData/X/reactComb.npy", allow_pickle=True)
